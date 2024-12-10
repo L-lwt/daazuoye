@@ -4,5 +4,7 @@
         <file>image/open.png</file>
         <file>image/save.png</file>
         <file>image/saveas.png</file>
+        <file>image/backcolor.png</file>
+        <file>image/light.png</file>
     </qresource>
 </RCC>
