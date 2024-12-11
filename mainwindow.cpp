@@ -162,40 +162,40 @@ void MainWindow::on_actionSaveas_triggered()
 
 void MainWindow::on_textEdit_textChanged()
 {
-    QPlainTextEdit *currentEditor = qobject_cast<QPlainTextEdit*>(tabWidget->currentWidget());
-    if(!textChanged){
-        this->setWindowTitle("*"+this->windowTitle());
-        textChanged=true;
-    }
-    statusLabel.setText("length: " + QString::number(currentEditor->toPlainText().length()) +
-                        " lines: " +
-                        QString::number(currentEditor->document()->lineCount()));
+    // QPlainTextEdit *currentEditor = qobject_cast<QPlainTextEdit*>(tabWidget->currentWidget());
+    // if(!textChanged){
+    //     this->setWindowTitle("*"+this->windowTitle());
+    //     textChanged=true;
+    // }
+    // statusLabel.setText("length: " + QString::number(currentEditor->toPlainText().length()) +
+    //                     " lines: " +
+    //                     QString::number(currentEditor->document()->lineCount()));
 
 }
 
 bool MainWindow::textEditConfirmed()
 {
-    if(textChanged){
-        QString path = (filePath !="")? filePath : "无标题.txt";
-        QMessageBox msg(this);
-        msg.setIcon(QMessageBox::Question);
-        msg.setWindowTitle("...");
-        msg.setWindowFlag(Qt::Drawer);
-        msg.setText(QString("是否将更改保存到\n")+"\""+path+"\"?");
-        msg.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
-        int r = msg.exec();
-        switch(r){
-        case QMessageBox::Yes:
-            on_actionSave_triggered();
-            break;
-        case QMessageBox::No:
-            textChanged = false;
-            break;
-        case QMessageBox::Cancel:
-            return false;
-        }
-    }
-    return true;
+    // if(textChanged){
+    //     QString path = (filePath !="")? filePath : "无标题.txt";
+    //     QMessageBox msg(this);
+    //     msg.setIcon(QMessageBox::Question);
+    //     msg.setWindowTitle("...");
+    //     msg.setWindowFlag(Qt::Drawer);
+    //     msg.setText(QString("是否将更改保存到\n")+"\""+path+"\"?");
+    //     msg.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+    //     int r = msg.exec();
+    //     switch(r){
+    //     case QMessageBox::Yes:
+    //         on_actionSave_triggered();
+    //         break;
+    //     case QMessageBox::No:
+    //         textChanged = false;
+    //         break;
+    //     case QMessageBox::Cancel:
+    //         return false;
+    //     }
+    // }
+    // return true;
 
 }
 
@@ -265,7 +265,7 @@ void MainWindow::on_actionExit_triggered()
 void MainWindow::on_actionbackcolor_triggered()
 {
     // 获取当前活动的 QTextEdit 组件
-    QTextEdit *currentEditor = qobject_cast<QTextEdit*>(tabWidget->currentWidget());
+    QPlainTextEdit *currentEditor = qobject_cast<QPlainTextEdit*>(tabWidget->currentWidget());
     if (!currentEditor) return; // 如果没有当前活动的编辑器，则退出
 
     // 弹出颜色选择对话框
