@@ -54,7 +54,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_actionNew_triggered()
 {
     // 创建新的 QTextEdit 组件
-    QPlainTextEdit *editor = new QPlainTextEdit(this);
+    QPlainTextEdit *editor = new  CustomPlainTextEdit(this);
     // 添加到 QTabWidget 中
     QString tabName = QString("未命名-%1").arg(i); // 将变量i插入到字符串中
     int index = tabWidget->addTab(editor, tabName); // 添加标签
@@ -77,7 +77,7 @@ void MainWindow::on_actionOpen_triggered()
             file.close();
 
             // 创建新的 QTextEdit 组件
-            QPlainTextEdit *editor = new QPlainTextEdit(this);
+            QPlainTextEdit *editor = new  CustomPlainTextEdit(this);
             editor->setPlainText(text);
 
             // 添加到 QTabWidget 中

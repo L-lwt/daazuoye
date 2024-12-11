@@ -8,5 +8,6 @@
         <file>image/light.png</file>
         <file>image/delete_history.png</file>
         <file>image/view_history.png</file>
+        <file>image/note.png</file>
     </qresource>
 </RCC>

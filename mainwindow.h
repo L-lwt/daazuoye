@@ -9,6 +9,7 @@
 #include "highlighter.h"
 #include "recentfiles.h"
 #include <QListWidget>
+#include "customplaintextedit.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
