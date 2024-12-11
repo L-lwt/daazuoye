@@ -9,5 +9,9 @@
         <file>image/delete_history.png</file>
         <file>image/view_history.png</file>
         <file>image/note.png</file>
+        <file>image/add.png</file>
+        <file>image/delete.png</file>
+        <file>image/goto.png</file>
+        <file>image/show.png</file>
     </qresource>
 </RCC>

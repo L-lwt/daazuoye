@@ -10,6 +10,8 @@
 #include "recentfiles.h"
 #include <QListWidget>
 #include "customplaintextedit.h"
+#include "bookmark.h"
+#include <QInputDialog>
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -38,7 +40,11 @@ private slots:
     void setLanguageJavaScript();
     void setLanguageHTML();
     void clearHistory();
-    void viewHistory(); // 添加新的槽函数声明
+    void viewHistory(); // 添加新的槽函数声明 
+    void addBookmark();
+    void goToBookmark();
+    void deleteBookmark();
+    void showBookmarks();
 private:
     Ui::MainWindow *ui;
     QLabel statusCursorLabel;
@@ -54,5 +60,6 @@ private:
     RecentFiles recentFiles;
     QDialog *historyDialog; // 新增用于显示历史记录的对话框
     QListWidget *historyListWidget; // 新增用于显示历史记录的控件
+    QMap<int, Bookmark> bookmarks;
 };
 #endif // MAINWINDOW_H

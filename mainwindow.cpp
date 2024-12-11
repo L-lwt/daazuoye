@@ -44,6 +44,12 @@ MainWindow::MainWindow(QWidget *parent)
     layout->addWidget(historyListWidget);//将historyListWidget控件添加到之前创建的垂直布局（QVBoxLayout）
     historyDialog->setLayout(layout);//这行代码将垂直布局设置为对话框的布局管理器
     historyDialog->setWindowTitle("历史记录");
+
+
+    connect(ui->actionAddBookmark, &QAction::triggered, this, &MainWindow::addBookmark);
+    connect(ui->actionShowBookmarks, &QAction::triggered, this, &MainWindow::showBookmarks);
+    connect(ui->actionDeleteBookmark, &QAction::triggered, this, &MainWindow::deleteBookmark);
+    connect(ui->actionGoToBookmark, &QAction::triggered, this, &MainWindow::goToBookmark);
 }
 
 MainWindow::~MainWindow()
@@ -373,4 +379,49 @@ void MainWindow::viewHistory() {
         historyListWidget->addItem(fileName);
     }
     historyDialog->exec(); // 显示对话框
+}
+
+void MainWindow::addBookmark()
+{
+    QPlainTextEdit *currentEditor = qobject_cast<QPlainTextEdit*>(tabWidget->currentWidget());
+    int line = currentEditor->textCursor().blockNumber();//这行代码从 editor 对象中获取当前光标所在行的编号，并将其赋值给 line 变量。textCursor() 方法返回一个光标对象，而 blockNumber() 方法则返回该光标所在的行号
+    Bookmark bookmark(line, currentEditor->document()->findBlockByNumber(line).text());//行号 line 和对应行的文本内容。editor->document()->findBlockByNumber(line).text() 会找到指定行号的文本块，并返回其中的文本内容
+    bookmarks.insert(line, bookmark);
+}
+
+void MainWindow::goToBookmark()
+{
+    QPlainTextEdit *currentEditor = qobject_cast<QPlainTextEdit*>(tabWidget->currentWidget());
+    bool ok;
+    int line = QInputDialog::getInt(this, tr("Go to Bookmark"), tr("Line number:"), 0, 0, currentEditor->blockCount() - 1, 1, &ok);
+    if (ok && bookmarks.contains(line)) {
+        QTextCursor cursor = currentEditor->textCursor();
+        cursor.movePosition(QTextCursor::Start);
+        cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, line);
+        currentEditor->setTextCursor(cursor);
+    } else {
+        QMessageBox::warning(this, tr("Error"), tr("Bookmark not found!"));
+    }
+}
+
+void MainWindow::deleteBookmark()
+{
+    QPlainTextEdit *currentEditor = qobject_cast<QPlainTextEdit*>(tabWidget->currentWidget());
+    bool ok;
+    int line = QInputDialog::getInt(this, tr("Delete Bookmark"), tr("Line number:"), 0, 0, currentEditor->blockCount() - 1, 1, &ok);
+    if (ok) {
+        if (bookmarks.remove(line) == 0) {
+            QMessageBox::warning(this, tr("Error"), tr("Bookmark not found!"));
+        }
+    }
+}
+
+void MainWindow::showBookmarks()
+{
+    // Display bookmarks (in a dialog or another widget)
+    QStringList bookmarkList;
+    for (const Bookmark &bookmark : bookmarks) {
+        bookmarkList.append(QString("Line %1: %2").arg(bookmark.line()).arg(bookmark.text()));
+    }
+    QMessageBox::information(this, "Bookmarks", bookmarkList.join("\n"));
 }

@@ -81,9 +81,25 @@
     <addaction name="actionView_History"/>
     <addaction name="actionClear_History"/>
    </widget>
+   <widget class="QMenu" name="menu_V">
+    <property name="title">
+     <string>编辑(&amp;V)</string>
+    </property>
+    <widget class="QMenu" name="menu_K">
+     <property name="title">
+      <string>书签(&amp;K)</string>
+     </property>
+     <addaction name="actionAddBookmark"/>
+     <addaction name="actionShowBookmarks"/>
+     <addaction name="actionDeleteBookmark"/>
+     <addaction name="actionGoToBookmark"/>
+    </widget>
+    <addaction name="menu_K"/>
+   </widget>
    <addaction name="menu_F"/>
    <addaction name="menu"/>
    <addaction name="menu_3"/>
+   <addaction name="menu_V"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -104,6 +120,11 @@
    <addaction name="actionbackcolor"/>
    <addaction name="actionView_History"/>
    <addaction name="actionClear_History"/>
+   <addaction name="separator"/>
+   <addaction name="actionAddBookmark"/>
+   <addaction name="actionShowBookmarks"/>
+   <addaction name="actionDeleteBookmark"/>
+   <addaction name="actionGoToBookmark"/>
   </widget>
   <action name="actionNew">
    <property name="icon">
@@ -254,6 +275,42 @@
    </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionAddBookmark">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/image/add.png</normaloff>:/image/add.png</iconset>
+   </property>
+   <property name="text">
+    <string>增加</string>
+   </property>
+  </action>
+  <action name="actionShowBookmarks">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/image/show.png</normaloff>:/image/show.png</iconset>
+   </property>
+   <property name="text">
+    <string>显示</string>
+   </property>
+  </action>
+  <action name="actionDeleteBookmark">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/image/delete.png</normaloff>:/image/delete.png</iconset>
+   </property>
+   <property name="text">
+    <string>删除</string>
+   </property>
+  </action>
+  <action name="actionGoToBookmark">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/image/goto.png</normaloff>:/image/goto.png</iconset>
+   </property>
+   <property name="text">
+    <string>跳转</string>
    </property>
   </action>
  </widget>
