@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     bookmark.cpp \
     customplaintextedit.cpp \
+    favoritesmanager.cpp \
     highlighter.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
 HEADERS += \
     bookmark.h \
     customplaintextedit.h \
+    favoritesmanager.h \
     highlighter.h \
     mainwindow.h \
     recentfiles.h

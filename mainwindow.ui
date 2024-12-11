@@ -52,10 +52,19 @@
     <property name="title">
      <string>文件(&amp;F)</string>
     </property>
+    <widget class="QMenu" name="menu_4">
+     <property name="title">
+      <string>收藏夹</string>
+     </property>
+     <addaction name="actionAddSC"/>
+     <addaction name="actionRemoveSC"/>
+     <addaction name="actionViewSC"/>
+    </widget>
     <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
     <addaction name="actionSaveas"/>
+    <addaction name="menu_4"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menu">
@@ -256,7 +265,7 @@
      <normaloff>:/image/view_history.png</normaloff>:/image/view_history.png</iconset>
    </property>
    <property name="text">
-    <string>View_History</string>
+    <string>查看历史</string>
    </property>
    <property name="toolTip">
     <string>查看历史</string>
@@ -271,7 +280,10 @@
      <normaloff>:/image/delete_history.png</normaloff>:/image/delete_history.png</iconset>
    </property>
    <property name="text">
-    <string>Clear_History</string>
+    <string>清除历史</string>
+   </property>
+   <property name="toolTip">
+    <string>清除历史</string>
    </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::NoRole</enum>
@@ -311,6 +323,36 @@
    </property>
    <property name="text">
     <string>跳转</string>
+   </property>
+  </action>
+  <action name="actionAddSC">
+   <property name="text">
+    <string>增加收藏夹</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
+  </action>
+  <action name="actionRemoveSC">
+   <property name="text">
+    <string>移除收藏夹</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionViewSC">
+   <property name="text">
+    <string>查看收藏夹</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::NoRole</enum>
    </property>
   </action>
  </widget>

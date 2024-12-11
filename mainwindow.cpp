@@ -50,6 +50,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionShowBookmarks, &QAction::triggered, this, &MainWindow::showBookmarks);
     connect(ui->actionDeleteBookmark, &QAction::triggered, this, &MainWindow::deleteBookmark);
     connect(ui->actionGoToBookmark, &QAction::triggered, this, &MainWindow::goToBookmark);
+
+    connect(ui->actionAddSC, &QAction::triggered, this, &MainWindow::on_addAction_triggered);
+    connect(ui->actionRemoveSC, &QAction::triggered, this, &MainWindow::on_removeAction_triggered);
+    connect(ui->actionViewSC, &QAction::triggered, this, &MainWindow::on_viewAction_triggered);
 }
 
 MainWindow::~MainWindow()
@@ -424,4 +428,31 @@ void MainWindow::showBookmarks()
         bookmarkList.append(QString("Line %1: %2").arg(bookmark.line()).arg(bookmark.text()));
     }
     QMessageBox::information(this, "Bookmarks", bookmarkList.join("\n"));
+}
+
+
+void MainWindow::on_addAction_triggered()
+{
+    QString filePath = QInputDialog::getText(this, tr("Add Favorite"), tr("File Path:"));
+    if (!filePath.isEmpty()) {
+        favoritesManager->addFavorite(filePath);
+    }
+}
+
+void MainWindow::on_removeAction_triggered()
+{
+
+    QString filePath = QInputDialog::getText(this, tr("Remove Favorite"), tr("File Path:")); if (!filePath.isEmpty()) {
+        favoritesManager->removeFavorite(filePath);
+    }
+    else {
+        QMessageBox::warning(this, tr("Remove Favorite"), tr("Please enter a valid path to remove."));
+    }
+}
+
+void MainWindow::on_viewAction_triggered()
+{
+    QStringList favorites = favoritesManager->model()->stringList();
+    QString favoriteList = favorites.join("\n");
+    QMessageBox::information(this, tr("Favorites List"), favoriteList);
 }

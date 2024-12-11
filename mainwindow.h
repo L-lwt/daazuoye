@@ -12,6 +12,7 @@
 #include "customplaintextedit.h"
 #include "bookmark.h"
 #include <QInputDialog>
+#include "favoritesmanager.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -45,6 +46,10 @@ private slots:
     void goToBookmark();
     void deleteBookmark();
     void showBookmarks();
+    void on_addAction_triggered();
+    void on_removeAction_triggered();
+    void on_viewAction_triggered();
+
 private:
     Ui::MainWindow *ui;
     QLabel statusCursorLabel;
@@ -61,5 +66,6 @@ private:
     QDialog *historyDialog; // 新增用于显示历史记录的对话框
     QListWidget *historyListWidget; // 新增用于显示历史记录的控件
     QMap<int, Bookmark> bookmarks;
+    FavoritesManager *favoritesManager;
 };
 #endif // MAINWINDOW_H
