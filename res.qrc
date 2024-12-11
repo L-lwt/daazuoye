@@ -6,5 +6,7 @@
         <file>image/saveas.png</file>
         <file>image/backcolor.png</file>
         <file>image/light.png</file>
+        <file>image/delete_history.png</file>
+        <file>image/view_history.png</file>
     </qresource>
 </RCC>

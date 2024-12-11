@@ -7,7 +7,8 @@
 #include <QColorDialog>
 #include <QPlainTextEdit>
 #include "highlighter.h"
-
+#include "recentfiles.h"
+#include <QListWidget>
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -35,6 +36,8 @@ private slots:
     void setLanguagePython();
     void setLanguageJavaScript();
     void setLanguageHTML();
+    void clearHistory();
+    void viewHistory(); // 添加新的槽函数声明
 private:
     Ui::MainWindow *ui;
     QLabel statusCursorLabel;
@@ -47,5 +50,8 @@ private:
     QMap<QPlainTextEdit*, QString> filePaths; //用于存储键值对,它将QTextEdit指针作为键，将QString作为值
     QPlainTextEdit *textEdit;
     Highlighter *highlighter;
+    RecentFiles recentFiles;
+    QDialog *historyDialog; // 新增用于显示历史记录的对话框
+    QListWidget *historyListWidget; // 新增用于显示历史记录的控件
 };
 #endif // MAINWINDOW_H

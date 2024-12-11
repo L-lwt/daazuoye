@@ -3,6 +3,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QPlainTextEdit>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -15,13 +16,13 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(tabWidget);
 
     connect(tabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::closeTab);
-     statusLabel.setMaximumWidth(150);
-     statusLabel.setText("Length: " + QString::number(0) + " lines: " + QString::number(1));
-     ui->statusbar->addPermanentWidget(&statusLabel);
+    statusLabel.setMaximumWidth(150);
+    statusLabel.setText("Length: " + QString::number(0) + " lines: " + QString::number(1));
+    ui->statusbar->addPermanentWidget(&statusLabel);
 
-     statusCursorLabel.setMaximumWidth(150);
-     statusCursorLabel.setText("Ln: " + QString::number(0) + " Col: " + QString::number(1));
-     ui->statusbar->addPermanentWidget(&statusCursorLabel);
+    statusCursorLabel.setMaximumWidth(150);
+    statusCursorLabel.setText("Ln: " + QString::number(0) + " Col: " + QString::number(1));
+    ui->statusbar->addPermanentWidget(&statusCursorLabel);
 
     QLabel *author = new QLabel(ui->statusbar);
     author->setText(tr("林文涛"));
@@ -31,6 +32,18 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionPython, &QAction::triggered, this, &MainWindow::setLanguagePython);
     connect(ui->actionJavaScript, &QAction::triggered, this, &MainWindow::setLanguageJavaScript);
     connect(ui->actionHTML, &QAction::triggered, this, &MainWindow::setLanguageHTML);
+
+    connect(ui->actionClear_History, &QAction::triggered, this, &MainWindow::clearHistory);
+    connect(ui->actionView_History, &QAction::triggered, this, &MainWindow::viewHistory); // 连接查看按钮
+    recentFiles.loadHistory();
+
+    // 初始化历史记录对话框及其控件
+    historyDialog = new QDialog(this);//创建了一个新的QDialog对象
+    QVBoxLayout *layout = new QVBoxLayout(historyDialog);//直布局（QVBoxLayout）对象
+    historyListWidget = new QListWidget(historyDialog);//istoryListWidget将用于显示最近打开的文件列表。historyDialog作为其父对象，确保当对话框销毁时，这个控件也会被销毁
+    layout->addWidget(historyListWidget);//将historyListWidget控件添加到之前创建的垂直布局（QVBoxLayout）
+    historyDialog->setLayout(layout);//这行代码将垂直布局设置为对话框的布局管理器
+    historyDialog->setWindowTitle("历史记录");
 }
 
 MainWindow::~MainWindow()
@@ -54,6 +67,8 @@ void MainWindow::on_actionOpen_triggered()
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("打开文件"), "", tr("文本文件 (*.txt)"));
     if (!fileName.isEmpty()) {
+        recentFiles.addFile(fileName);
+
         // 读取文件内容
         QFile file(fileName);
         if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {//只读模式打开文件,以文本模式打开文件
@@ -347,3 +362,15 @@ void MainWindow::setLanguageHTML() {
     highlighter = new Highlighter(currentEditor->document(), "HTML");
 }
 
+void MainWindow::clearHistory() {
+    recentFiles.clearHistory();
+}
+
+void MainWindow::viewHistory() {
+    historyListWidget->clear();
+    QStringList history = recentFiles.getHistory();
+    for (const QString &fileName : history) {
+        historyListWidget->addItem(fileName);
+    }
+    historyDialog->exec(); // 显示对话框
+}
