@@ -15,18 +15,22 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(tabWidget);
 
     connect(tabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::closeTab);
-    // statusLabel.setMaximumWidth(150);
-    // statusLabel.setText("Length: " + QString::number(0) + " lines: " + QString::number(1));
-    // ui->statusbar->addPermanentWidget(&statusLabel);
+     statusLabel.setMaximumWidth(150);
+     statusLabel.setText("Length: " + QString::number(0) + " lines: " + QString::number(1));
+     ui->statusbar->addPermanentWidget(&statusLabel);
 
-    // statusCursorLabel.setMaximumWidth(150);
-    // statusCursorLabel.setText("Ln: " + QString::number(0) + " Col: " + QString::number(1));
-    // ui->statusbar->addPermanentWidget(&statusCursorLabel);
+     statusCursorLabel.setMaximumWidth(150);
+     statusCursorLabel.setText("Ln: " + QString::number(0) + " Col: " + QString::number(1));
+     ui->statusbar->addPermanentWidget(&statusCursorLabel);
 
     QLabel *author = new QLabel(ui->statusbar);
     author->setText(tr("林文涛"));
     ui->statusbar->addPermanentWidget(author);
 
+    connect(ui->actionC, &QAction::triggered, this, &MainWindow::setLanguageC);
+    connect(ui->actionPython, &QAction::triggered, this, &MainWindow::setLanguagePython);
+    connect(ui->actionJavaScript, &QAction::triggered, this, &MainWindow::setLanguageJavaScript);
+    connect(ui->actionHTML, &QAction::triggered, this, &MainWindow::setLanguageHTML);
 }
 
 MainWindow::~MainWindow()
@@ -72,49 +76,6 @@ void MainWindow::on_actionOpen_triggered()
 
 void MainWindow::on_actionSave_triggered()
 {
-    // // 获取当前活动的 QTextEdit 组件
-    // QTextEdit *currentEditor = qobject_cast<QTextEdit*>(tabWidget->currentWidget());
-    // if (!currentEditor) return; // 如果没有当前活动的编辑器，则退出
-
-    // // 检查是否有已记录的文件路径
-    // bool isNewFile = !filePaths.contains(currentEditor);
-    // QString filePath = isNewFile ? "" : filePaths[currentEditor];
-
-    // // 如果是新文件或有未保存更改，则执行保存操作
-    // if (isNewFile || currentEditor->document()->isModified()) {
-    //     QString fileName;
-    //     if (isNewFile) { // 对于新文件，必须选择保存位置
-    //         fileName = QFileDialog::getSaveFileName(this, tr("另存为"), "", tr("文本文件 (*.txt)"));
-    //         if (fileName.isEmpty()) {
-    //             return; // 用户取消了保存操作
-    //         }
-    //         filePaths[currentEditor] = fileName; // 记录文件路径
-    //     } else {
-    //         fileName = filePath;
-    //     }
-
-    //     QFile file(fileName);
-    //     if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-    //         QTextStream out(&file);
-    //         out << currentEditor->toPlainText();
-    //         file.close();
-    //         currentEditor->document()->setModified(false); // 保存后重置修改状态
-
-    //         // 更新标签页标题，移除星号标记
-    //         int index = tabWidget->indexOf(currentEditor);
-    //         if (index != -1) {
-    //             QString title = QFileInfo(fileName).fileName();
-    //             tabWidget->setTabText(index, title);
-    //         }
-
-    //         QMessageBox::information(this, tr("保存成功"), tr("文件已成功保存。"));
-    //     } else {
-    //         QMessageBox::warning(this, tr("保存失败"), tr("无法保存文件 %1").arg(fileName));
-    //     }
-    // } else {
-    //     // 文件未修改，不需要保存
-    //     QMessageBox::information(this, tr("无需保存"), tr("文件没有修改，无需保存。"));
-    // }
     // 获取当前活动的 QPlainTextEdit 组件
     QPlainTextEdit *currentEditor = qobject_cast<QPlainTextEdit*>(tabWidget->currentWidget());
     if (!currentEditor) return; // 如果没有当前活动的编辑器，则退出
@@ -201,13 +162,14 @@ void MainWindow::on_actionSaveas_triggered()
 
 void MainWindow::on_textEdit_textChanged()
 {
-    // if(!textChanged){
-    //     this->setWindowTitle("*"+this->windowTitle());
-    //     textChanged=true;
-    // }
-    // statusLabel.setText("length: " + QString::number(ui->textedit->toPlainText().length()) +
-    //                     " lines: " +
-    //                     QString::number(ui->textedit->document()->lineCount()));
+    QPlainTextEdit *currentEditor = qobject_cast<QPlainTextEdit*>(tabWidget->currentWidget());
+    if(!textChanged){
+        this->setWindowTitle("*"+this->windowTitle());
+        textChanged=true;
+    }
+    statusLabel.setText("length: " + QString::number(currentEditor->toPlainText().length()) +
+                        " lines: " +
+                        QString::number(currentEditor->document()->lineCount()));
 
 }
 
@@ -365,5 +327,23 @@ void MainWindow::closeTab()
     tabWidget->removeTab(index);
 }
 
+void MainWindow::setLanguageC() {
+    QPlainTextEdit *currentEditor = qobject_cast<QPlainTextEdit*>(tabWidget->currentWidget());
+    highlighter = new Highlighter(currentEditor->document(), "C");
+}
 
+void MainWindow::setLanguagePython() {
+    QPlainTextEdit *currentEditor = qobject_cast<QPlainTextEdit*>(tabWidget->currentWidget());
+    highlighter = new Highlighter(currentEditor->document(), "Python");
+}
+
+void MainWindow::setLanguageJavaScript() {
+    QPlainTextEdit *currentEditor = qobject_cast<QPlainTextEdit*>(tabWidget->currentWidget());
+    highlighter = new Highlighter(currentEditor->document(), "JavaScript");
+}
+
+void MainWindow::setLanguageHTML() {
+    QPlainTextEdit *currentEditor = qobject_cast<QPlainTextEdit*>(tabWidget->currentWidget());
+    highlighter = new Highlighter(currentEditor->document(), "HTML");
+}
 

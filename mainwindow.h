@@ -6,6 +6,8 @@
 #include <QTextEdit>
 #include <QColorDialog>
 #include <QPlainTextEdit>
+#include "highlighter.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -29,15 +31,21 @@ private slots:
     void on_actionExit_triggered();
     void on_actionbackcolor_triggered();
     void closeTab(void);
+    void setLanguageC();
+    void setLanguagePython();
+    void setLanguageJavaScript();
+    void setLanguageHTML();
 private:
     Ui::MainWindow *ui;
-   // QLabel statusCursorLabel;
-    //QLabel statusLabel;
+    QLabel statusCursorLabel;
+    QLabel statusLabel;
     QString filePath;
     bool textChanged;
     bool textEditConfirmed();
     int i=1;
     QTabWidget *tabWidget;
     QMap<QPlainTextEdit*, QString> filePaths; //用于存储键值对,它将QTextEdit指针作为键，将QString作为值
+    QPlainTextEdit *textEdit;
+    Highlighter *highlighter;
 };
 #endif // MAINWINDOW_H

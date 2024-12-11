@@ -62,10 +62,10 @@
      <property name="title">
       <string>高亮</string>
      </property>
-     <addaction name="actionC_2"/>
-     <addaction name="actionPYTHON"/>
+     <addaction name="actionC"/>
+     <addaction name="actionPython"/>
      <addaction name="actionJavaScript"/>
-     <addaction name="actionHtml"/>
+     <addaction name="actionHTML"/>
     </widget>
     <addaction name="menu_2"/>
     <addaction name="actionbackcolor"/>
@@ -180,12 +180,12 @@
     <enum>QAction::MenuRole::NoRole</enum>
    </property>
   </action>
-  <action name="actionC_2">
+  <action name="actionC">
    <property name="text">
-    <string>C++</string>
+    <string>C</string>
    </property>
   </action>
-  <action name="actionPYTHON">
+  <action name="actionPython">
    <property name="text">
     <string>Python</string>
    </property>
@@ -195,9 +195,9 @@
     <string>JavaScript</string>
    </property>
   </action>
-  <action name="actionHtml">
+  <action name="actionHTML">
    <property name="text">
-    <string>Html</string>
+    <string>HTML</string>
    </property>
   </action>
   <action name="actionbackcolor">
